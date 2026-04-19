@@ -1,0 +1,56 @@
+export type Card = { en: string; de: string };
+
+export type Course = "EKurs" | "GKurs";
+
+export const VOCABULARY: Record<Course, Record<number, Card[] | null>> = {
+  EKurs: {
+    1: [
+      { en: "Argument", de: "Argument, Streit" },
+      { en: "Digital", de: "digital" },
+      { en: "Average", de: "Durchschnitt" },
+      { en: "at the same time", de: "zur selben Zeit" },
+      { en: "attraction", de: "Anziehungskraft" },
+      { en: "the pros and cons", de: "das Für und Wider" },
+      { en: "habit", de: "(An-)Gewohnheit" },
+      { en: "be a drifter", de: "sich treiben lassen" },
+      { en: "butterfly", de: "Schmetterling" },
+      { en: "convince", de: "überzeugen" },
+      { en: "standard", de: "normal, übrig" },
+      { en: "imaginative", de: "einfallsreich" },
+      { en: "arty", de: "(gewollt) künstlerisch" },
+      { en: "creative", de: "kreativ" },
+      { en: "pair", de: "Paar" },
+      { en: "put something up on social media", de: "etwas in soziale Medien (ein)stellen" },
+      { en: "vain", de: "eitel" },
+      { en: "critic", de: "Kritiker/in" },
+      { en: "depressing", de: "deprimierend" },
+      { en: "self-portrait", de: "Selbstporträt" },
+      { en: "in other words", de: "mit anderen Worten" },
+      { en: "modern day", de: "von heute" },
+      { en: "although", de: "obwohl" },
+    ],
+    2: null,
+    3: null,
+  },
+  GKurs: {
+    1: [
+      { en: "Generation", de: "Generation" },
+      { en: "likes and dislikes", de: "Vorlieben und Abneigungen" },
+      { en: "average", de: "Durchschnitt" },
+      { en: "at the same time", de: "gleichzeitig" },
+      { en: "at least", de: "wenigstens" },
+      { en: "media", de: "Medien" },
+      { en: "the cause and cons", de: "das Für und Wider" },
+      { en: "addicted to", de: "süchtig (nach)" },
+      { en: "share", de: "teilen, austauschen" },
+      { en: "connect to", de: "verbinden (mit)" },
+      { en: "Feel comfortable with", de: "sich wohlfühlen" },
+      { en: "Digital", de: "digital" },
+      { en: "up to", de: "bis zu" },
+      { en: "habit", de: "(An-)Gewohnheit" },
+      { en: "few", de: "wenige" },
+    ],
+    2: null,
+    3: null,
+  },
+};
