@@ -7,6 +7,7 @@ import { UserProvider } from "@/context/UserContext";
 import Index from "./pages/Index.tsx";
 import Vocabulary from "./pages/Vocabulary.tsx";
 import Week1Reading from "./pages/Week1Reading.tsx";
+import Week2Listening from "./pages/Week2Listening.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -22,6 +23,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/vocabulary" element={<Vocabulary />} />
             <Route path="/week/1" element={<Week1Reading />} />
+            <Route path="/week/2" element={<Week2Listening />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

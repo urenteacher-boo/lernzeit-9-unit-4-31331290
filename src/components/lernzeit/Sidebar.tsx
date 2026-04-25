@@ -3,7 +3,7 @@ import { useUser } from "@/context/UserContext";
 
 const WEEKS = [
   { n: 1, label: "Reading",    to: "/week/1", enabled: true },
-  { n: 2, label: "Listening",  to: "#",       enabled: false },
+  { n: 2, label: "Listening",  to: "/week/2", enabled: true },
   { n: 3, label: "Grammar",    to: "#",       enabled: false },
   { n: 4, label: "Vocabulary", to: "#",       enabled: false },
   { n: 5, label: "Speaking",   to: "#",       enabled: false },
