@@ -1,19 +1,24 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
 
 interface UserContextType {
-  studentName: string;
-  setStudentName: (name: string) => void;
+  week1Name: string;
+  setWeek1Name: (name: string) => void;
+  week2Name: string;
+  setWeek2Name: (name: string) => void;
 }
 
 const UserContext = createContext<UserContextType>({
-  studentName: "",
-  setStudentName: () => {},
+  week1Name: "",
+  setWeek1Name: () => {},
+  week2Name: "",
+  setWeek2Name: () => {},
 });
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
-  const [studentName, setStudentName] = useState("");
+  const [week1Name, setWeek1Name] = useState("");
+  const [week2Name, setWeek2Name] = useState("");
   return (
-    <UserContext.Provider value={{ studentName, setStudentName }}>
+    <UserContext.Provider value={{ week1Name, setWeek1Name, week2Name, setWeek2Name }}>
       {children}
     </UserContext.Provider>
   );

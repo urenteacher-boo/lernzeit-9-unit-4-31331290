@@ -13,12 +13,17 @@ const WEEKS = [
 export const LernzeitSidebar = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { studentName } = useUser();
+  const { week1Name, week2Name } = useUser();
+
+  const studentName =
+    location.pathname.startsWith("/week/2") ? week2Name :
+    location.pathname.startsWith("/week/1") ? week1Name :
+    week1Name || week2Name;
 
   const initials = studentName
     ? studentName.split(" ").map((p) => p[0]).join("").slice(0, 2).toUpperCase()
-    : "M";
-  const displayName = studentName || "Mia";
+    : "?";
+  const displayName = studentName || "Student";
 
   const isVocabActive = location.pathname.startsWith("/vocabulary");
 

@@ -8,13 +8,13 @@ interface AnswerBlock {
   idPrefix: string;
 }
 
-export interface Step1Results {
-  wordsFound: string[];
-  totalWords: number;
-  imagePairs: number;
-  totalPairs: number;
-  pairMatches: number;
-  totalPairMatches: number;
+export interface PdfConfig {
+  weekLabel: string;
+  pageTitle: string;
+  step1SectionTitle: string;
+  answersTitle: string;
+  filenameWeek: string;
+  activities: { badge: string; lines: string[] }[];
 }
 
 // Brand colours (RGB)
@@ -50,7 +50,7 @@ function addPageIfNeeded(doc: jsPDF, y: number, needed: number): number {
 export function generateProgressPdf(
   studentName: string,
   blocks: AnswerBlock[],
-  step1: Step1Results
+  config: PdfConfig
 ) {
   const doc = new jsPDF({ unit: "mm", format: "a4" });
   const date = new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" });
@@ -62,11 +62,11 @@ export function generateProgressPdf(
   setTextColor(doc, CREAM);
   doc.setFont("helvetica", "bold");
   doc.setFontSize(7);
-  doc.text("LERNZEIT · UNIT 4 · GENERATION LIKE · WEEK 1 READING", MARGIN, 11);
+  doc.text(`LERNZEIT · UNIT 4 · GENERATION LIKE · ${config.weekLabel}`, MARGIN, 11);
 
   doc.setFont("helvetica", "bold");
   doc.setFontSize(20);
-  doc.text("Your Digital Footprint", MARGIN, 24);
+  doc.text(config.pageTitle, MARGIN, 24);
 
   doc.setFont("helvetica", "normal");
   doc.setFontSize(8);
@@ -88,31 +88,9 @@ export function generateProgressPdf(
   };
 
   // ── Step 1 summary ────────────────────────────────────────────────
-  sectionLabel("Step 1 · Discover — Vocabulary Activities");
+  sectionLabel(config.step1SectionTitle);
 
-  const activities = [
-    {
-      badge: "1.1 · Word Search",
-      lines: [
-        `Words found: ${step1.wordsFound.length} / ${step1.totalWords}`,
-        step1.wordsFound.length > 0 ? step1.wordsFound.join("  ·  ") : "None found",
-      ],
-    },
-    {
-      badge: "1.2 · Image Match",
-      lines: [`Images matched: ${step1.imagePairs} / ${step1.totalPairs}`],
-    },
-    {
-      badge: "1.3 · Safe Profile",
-      lines: ["Interactive profile-building exercise completed."],
-    },
-    {
-      badge: "1.4 · Connect the Pairs",
-      lines: [`Pairs matched: ${step1.pairMatches} / ${step1.totalPairMatches}`],
-    },
-  ];
-
-  for (const act of activities) {
+  for (const act of config.activities) {
     y = addPageIfNeeded(doc, y, 20);
 
     setFill(doc, CREAM);
@@ -144,7 +122,7 @@ export function generateProgressPdf(
     y += 22;
   }
 
-  // ── Steps 2-4 answers ─────────────────────────────────────────────
+  // ── Written answers ───────────────────────────────────────────────
   const sections: { step: string; q: string; a: string }[] = [];
   for (const block of blocks) {
     block.questions.forEach((item, i) => {
@@ -157,7 +135,7 @@ export function generateProgressPdf(
 
   y += 4;
   y = addPageIfNeeded(doc, y, 16);
-  sectionLabel("Steps 2–4 · Written Answers");
+  sectionLabel(config.answersTitle);
 
   if (sections.length === 0) {
     setTextColor(doc, MUTED);
@@ -167,7 +145,6 @@ export function generateProgressPdf(
     y += 10;
   } else {
     sections.forEach((s, idx) => {
-      // Measure required height
       const qLines = doc.splitTextToSize(`Q${idx + 1}: ${s.q}`, CONTENT - 12);
       const aLines = doc.splitTextToSize(s.a, CONTENT - 16);
       const blockH = 10 + qLines.length * 5 + aLines.length * 5 + 6;
@@ -179,7 +156,6 @@ export function generateProgressPdf(
       doc.setLineWidth(0.2);
       doc.roundedRect(MARGIN, y, CONTENT, blockH, 2, 2, "FD");
 
-      // step badge
       const badgeW2 = doc.getStringUnitWidth(s.step) * 7 / doc.internal.scaleFactor + 6;
       setFill(doc, [255, 255, 255] as const);
       setDraw(doc, TERRACOTTA);
@@ -190,13 +166,11 @@ export function generateProgressPdf(
       doc.setFontSize(7);
       doc.text(s.step, MARGIN + 7, y + 7.2);
 
-      // question
       setTextColor(doc, OLIVE);
       doc.setFont("helvetica", "bold");
       doc.setFontSize(9);
       doc.text(qLines, MARGIN + 6, y + 13);
 
-      // answer with left rule
       const aStartY = y + 13 + qLines.length * 5 + 1;
       setDraw(doc, OLIVE);
       doc.setLineWidth(0.5);
@@ -219,7 +193,7 @@ export function generateProgressPdf(
     doc.setFont("helvetica", "normal");
     doc.setFontSize(7);
     doc.text(
-      `Lernzeit · Unit 4 · Week 1 Reading · ${date}   |   Page ${p} of ${totalPages}`,
+      `Lernzeit · Unit 4 · ${config.weekLabel} · ${date}   |   Page ${p} of ${totalPages}`,
       PAGE_W / 2,
       291,
       { align: "center" }
@@ -227,5 +201,5 @@ export function generateProgressPdf(
   }
 
   const safeName = studentName.replace(/[^a-zA-Z0-9_\- ]/g, "").trim().replace(/\s+/g, "_");
-  doc.save(`Lernzeit_Week1_${safeName}_${date.replace(/ /g, "_")}.pdf`);
+  doc.save(`Lernzeit_${config.filenameWeek}_${safeName}_${date.replace(/ /g, "_")}.pdf`);
 }

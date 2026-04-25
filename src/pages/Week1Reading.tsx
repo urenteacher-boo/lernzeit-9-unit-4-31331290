@@ -79,7 +79,7 @@ const NameGate = ({ onEnter }: { onEnter: (name: string) => void }) => {
 };
 
 const Week1Reading = () => {
-  const { studentName, setStudentName } = useUser();
+  const { week1Name, setWeek1Name } = useUser();
   const navigate = useNavigate();
 
   const [wordsFound, setWordsFound] = useState<string[]>([]);
@@ -104,24 +104,29 @@ const Week1Reading = () => {
 
   const handleDownloadPdf = () => {
     generateProgressPdf(
-      studentName,
+      week1Name,
       [
         { stepTitle: "Step 2 · Recall", questions: Q_STEP2, answers, submitted, idPrefix: "s2" },
         { stepTitle: "Step 3 · Understand", questions: Q_STEP3, answers, submitted, idPrefix: "s3" },
         { stepTitle: "Step 4 · Apply & Challenge", questions: Q_STEP4, answers, submitted, idPrefix: "s4" },
       ],
       {
-        wordsFound,
-        totalWords: 6,
-        imagePairs: imageMatched,
-        totalPairs: 6,
-        pairMatches: pairMatched,
-        totalPairMatches: 3,
+        weekLabel: "WEEK 1 READING",
+        pageTitle: "Your Digital Footprint",
+        step1SectionTitle: "Step 1 · Discover — Vocabulary Activities",
+        answersTitle: "Steps 2–4 · Written Answers",
+        filenameWeek: "Week1",
+        activities: [
+          { badge: "1.1 · Word Search",       lines: [`Words found: ${wordsFound.length} / 6`, wordsFound.length > 0 ? wordsFound.join("  ·  ") : "None found"] },
+          { badge: "1.2 · Image Match",        lines: [`Images matched: ${imageMatched} / 6`] },
+          { badge: "1.3 · Safe Profile",       lines: ["Interactive profile-building exercise completed."] },
+          { badge: "1.4 · Connect the Pairs",  lines: [`Pairs matched: ${pairMatched} / 3`] },
+        ],
       }
     );
   };
 
-  if (!studentName) return <NameGate onEnter={setStudentName} />;
+  if (!week1Name) return <NameGate onEnter={setWeek1Name} />;
 
   return (
     <div className="min-h-screen flex">
@@ -153,7 +158,7 @@ const Week1Reading = () => {
               </div>
               <div className="flex flex-col items-end gap-2 mt-1">
                 <p className="text-[11px] tracking-[0.18em] uppercase text-olive/60">
-                  Logged in as <span className="text-olive font-semibold">{studentName}</span>
+                  Logged in as <span className="text-olive font-semibold">{week1Name}</span>
                 </p>
               </div>
             </div>
@@ -262,7 +267,7 @@ const Week1Reading = () => {
               className="flex items-center gap-2.5 px-7 py-3.5 rounded-full bg-olive text-cream font-sans font-semibold text-sm tracking-wide shadow-2xl transition-all disabled:opacity-40 disabled:cursor-not-allowed hover:enabled:bg-olive/90 hover:enabled:-translate-y-0.5"
             >
               <FileDown className="w-4 h-4" />
-              {hasAnyProgress ? `Generate PDF — ${studentName}` : "Generate PDF"}
+              {hasAnyProgress ? `Generate PDF — ${week1Name}` : "Generate PDF"}
             </button>
           </div>
 

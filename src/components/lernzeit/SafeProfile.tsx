@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { User, Lock, Hash, Plus, X, CheckCircle2, ArrowRight, Shield } from "lucide-react";
-import nicknameImg from "@/assets/safe-nickname.jpg";
-import passwordImg from "@/assets/safe-password.jpg";
-import tagsImg from "@/assets/safe-tags.jpg";
-import safeProfileImg from "@/assets/safe-profile.jpg";
+import nicknameImg from "@/assets/vocab-nickname.jpg";
+import passwordImg from "@/assets/vocab-password.jpg";
+import tagsImg from "@/assets/vocab-identity.jpg";
+import safeProfileImg from "@/assets/vocab-adult.jpg";
 
 function strength(pw: string) {
   let s = 0;
