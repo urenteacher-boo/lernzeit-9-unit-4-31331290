@@ -80,7 +80,7 @@ const Vocabulary = () => {
                         Vocabulary Test {n}
                       </span>
                       {enabled ? (
-                        <span className="pill pill-xp">Week 1</span>
+                        <span className="pill pill-xp">Week {n}</span>
                       ) : (
                         <span className="inline-flex items-center gap-1.5 text-[10px] tracking-[0.18em] uppercase text-olive/40">
                           <Lock className="w-3 h-3" />
@@ -103,7 +103,7 @@ const Vocabulary = () => {
           {screen === "deck" && cards && (
             <Flashcard
               cards={cards}
-              deckLabel={`${course} · Test ${test} · Week 1`}
+              deckLabel={`${course} · Test ${test} · Week ${test}`}
               onExit={() => setScreen("test")}
               onComplete={() => setScreen("done")}
             />
