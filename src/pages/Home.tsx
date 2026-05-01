@@ -68,7 +68,7 @@ export default function Home() {
               {WEEKS.map((w) => (
                 <button
                   key={w.n}
-                  onClick={() => w.n === 1 ? navigate("/week/1") : w.n === 2 ? navigate("/week/2") : undefined}
+                  onClick={() => w.n === 1 ? navigate("/week/1") : w.n === 2 ? navigate("/week/2") : w.n === 3 ? navigate("/week/3") : undefined}
                   className={`curriculum-card group relative aspect-[4/3] ${w.color} rounded-[2rem] overflow-hidden shadow-lg text-left focus-card-lift`}
                 >
                   {/* Leaf pattern overlay */}

@@ -4,7 +4,7 @@ import { useUser } from "@/context/UserContext";
 const WEEKS = [
   { n: 1, label: "Reading",    to: "/week/1", enabled: true },
   { n: 2, label: "Listening",  to: "/week/2", enabled: true },
-  { n: 3, label: "Grammar",    to: "#",       enabled: false },
+  { n: 3, label: "Grammar",    to: "/week/3", enabled: true },
   { n: 4, label: "Vocabulary", to: "#",       enabled: false },
   { n: 5, label: "Speaking",   to: "#",       enabled: false },
   { n: 6, label: "Revision",   to: "#",       enabled: false },
@@ -13,12 +13,12 @@ const WEEKS = [
 export const LernzeitSidebar = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { week1Name, week2Name } = useUser();
-
+  const { week1Name, week2Name, week3Name } = useUser();
   const studentName =
+    location.pathname.startsWith("/week/3") ? week3Name :
     location.pathname.startsWith("/week/2") ? week2Name :
     location.pathname.startsWith("/week/1") ? week1Name :
-    week1Name || week2Name;
+    week1Name || week2Name || week3Name;
 
   const initials = studentName
     ? studentName.split(" ").map((p) => p[0]).join("").slice(0, 2).toUpperCase()
