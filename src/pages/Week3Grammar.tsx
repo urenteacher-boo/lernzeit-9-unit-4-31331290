@@ -7,7 +7,27 @@ import { useUser } from "@/context/UserContext";
 import { generateProgressPdf } from "@/lib/generatePdf";
 import { FileDown, User, ChevronLeft } from "lucide-react";
 
-// ── Open-ended challenge questions (Exercise 6) ───────────────────────────────
+// ── Step 3 questions (no check) ───────────────────────────────────────────────
+const Q_STEP3_VERB = [
+  { q: "If Amy had cleaned her room, her mother ___ (be) happy.", hint: "Type 3 → would have + 3rd form" },
+  { q: "I will get some advice if I ___ (write) a letter to an agony aunt.", hint: "Type 1 → present simple" },
+  { q: "If you ___ (read) books all night long, you would not be able to get up early.", hint: "Type 2 → past simple" },
+  { q: "If you throw a party while your parents are gone, you ___ (be) in big trouble.", hint: "Type 1 → will + infinitive" },
+];
+const Q_STEP3_BUILD = [
+  { q: "Build: if / Max / keep / the music down / the neighbours / not call / the police", hint: "Type 1 conditional — If Max keeps…" },
+  { q: "Build: if / I / see / Sarah tomorrow / I / tell / her", hint: "Type 1 conditional — If I see…" },
+  { q: "Build: if / Peter / talk / to his parents / they / not be / angry", hint: "Type 1 conditional — If Peter talks…" },
+];
+
+// ── Step 4 questions (no check) ───────────────────────────────────────────────
+const PARTY_STORY = "Peter had a party while his parents were away. His friends were noisy, there was a food fight, and candles burnt his mother's rug. The neighbours called the police and Peter's parents came home early.";
+const Q_STEP4_PARTY = [
+  { q: "If I ___ (be) you, I ___ (talk) to your parents.", hint: "Type 2 → were / would talk" },
+  { q: "If you ___ (talk) to your parents before the party, you ___ (not get) into so much trouble.", hint: "Type 3 → had talked / would not have gotten" },
+  { q: "If you ___ (offer) to help pay for the rug, your parents ___ (be) happier.", hint: "Type 2 → offered / would be" },
+  { q: "If you ___ (not put) candles everywhere, the rug ___ (still be) fine.", hint: "Type 3 → had not put / would still be fine" },
+];
 const Q_CHALLENGE = [
   { q: "Write your own Type 3 conditional sentence.", hint: "Use: If + had + 3rd form … would have + 3rd form" },
   { q: "Write a second Type 3 conditional sentence.", hint: "Think of a past regret or a different outcome." },
@@ -909,19 +929,7 @@ const Week3Grammar = () => {
   const [ex3aSel, setEx3aSel] = useState<Record<string, string>>({});
   const [ex3aChecked, setEx3aChecked] = useState(false);
 
-  // ── Exercise 3B state
-  const [ex3bVals, setEx3bVals] = useState<Record<string, string>>({});
-  const [ex3bChecked, setEx3bChecked] = useState(false);
-
-  // ── Exercise 4 state
-  const [ex4Vals, setEx4Vals] = useState<Record<string, string>>({});
-  const [ex4Checked, setEx4Checked] = useState(false);
-
-  // ── Exercise 5 state
-  const [ex5Vals, setEx5Vals] = useState<Record<string, string>>({});
-  const [ex5Checked, setEx5Checked] = useState(false);
-
-  // ── Exercise 6 (Challenge Zone) open text
+  // ── Steps 3 & 4 open text (no check)
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState<Record<string, boolean>>({});
 
@@ -956,72 +964,29 @@ const Week3Grammar = () => {
     ex2dVal1.trim().length > 0 ||
     ex2dVal2.trim().length > 0 ||
     Object.keys(ex3aSel).length > 0 ||
-    Object.values(ex3bVals).some((v) => v?.trim()) ||
-    Object.values(ex4Vals).some((v) => v?.trim()) ||
-    Object.values(ex5Vals).some((v) => v?.trim()) ||
     Object.values(answers).some((v) => v?.trim());
 
   const handleDownloadPdf = () => {
     generateProgressPdf(
       week3Name,
       [
-        {
-          stepTitle: "Step 5 · Challenge Zone",
-          questions: Q_CHALLENGE,
-          answers,
-          submitted,
-          idPrefix: "ex6",
-        },
+        { stepTitle: "Step 3 · Verb Forms",       questions: Q_STEP3_VERB,  answers, submitted, idPrefix: "s3v" },
+        { stepTitle: "Step 3 · Build the Sentence", questions: Q_STEP3_BUILD, answers, submitted, idPrefix: "s3b" },
+        { stepTitle: "Step 4 · Party Story",       questions: Q_STEP4_PARTY, answers, submitted, idPrefix: "s4p" },
+        { stepTitle: "Step 4 · Challenge Zone",    questions: Q_CHALLENGE,   answers, submitted, idPrefix: "s4c" },
       ],
       {
         weekLabel: "WEEK 3 GRAMMAR",
         pageTitle: "If-Clauses",
-        step1SectionTitle: "Steps 1–4 · Grammar Exercises",
-        answersTitle: "Step 5 · Challenge Zone — Written Answers",
+        step1SectionTitle: "Step 2 · Recall — Interactive Exercises",
+        answersTitle: "Steps 3–4 · Written Answers",
         filenameWeek: "Week3",
         activities: [
-          {
-            badge: "Ex 1 · Sort Types",
-            lines: [
-              `Answered: ${Object.keys(ex1Sel).length} / 6${ex1Checked ? ` · Checked` : ""}`,
-            ],
-          },
-          {
-            badge: "Ex 2A · Match Meanings",
-            lines: [
-              `Answered: ${Object.keys(ex2aSel).length} / 3${ex2aChecked ? ` · Checked` : ""}`,
-            ],
-          },
-          {
-            badge: "Ex 2B · Multiple Choice",
-            lines: [
-              `Answered: ${Object.keys(ex2bSel).length} / 3${ex2bChecked ? ` · Checked` : ""}`,
-            ],
-          },
-          {
-            badge: "Ex 3A · Classify Practice",
-            lines: [
-              `Answered: ${Object.keys(ex3aSel).length} / 5${ex3aChecked ? ` · Checked` : ""}`,
-            ],
-          },
-          {
-            badge: "Ex 3B · Verb Forms",
-            lines: [
-              `Answered: ${Object.values(ex3bVals).filter((v) => v?.trim()).length} / 4${ex3bChecked ? ` · Checked` : ""}`,
-            ],
-          },
-          {
-            badge: "Ex 4 · Build Sentences",
-            lines: [
-              `Answered: ${Object.values(ex4Vals).filter((v) => v?.trim()).length} / 3${ex4Checked ? ` · Checked` : ""}`,
-            ],
-          },
-          {
-            badge: "Ex 5 · Party Story",
-            lines: [
-              `Filled: ${Object.values(ex5Vals).filter((v) => v?.trim()).length} / 8${ex5Checked ? ` · Checked` : ""}`,
-            ],
-          },
+          { badge: "Ex 1 · Sort Types",      lines: [`Answered: ${Object.keys(ex1Sel).length} / 6${ex1Checked ? " · Checked" : ""}`] },
+          { badge: "Ex 2A · Match Meanings", lines: [`Answered: ${Object.keys(ex2aSel).length} / 3${ex2aChecked ? " · Checked" : ""}`] },
+          { badge: "Ex 2B · Find Correct",   lines: [`Answered: ${Object.keys(ex2bSel).length} / 3${ex2bChecked ? " · Checked" : ""}`] },
+          { badge: "Ex 2C · Spot Mistake",   lines: [`Answered: ${Object.keys(ex2cSel).length} / 2${ex2cChecked ? " · Checked" : ""}`] },
+          { badge: "Ex 3A · Classify",       lines: [`Answered: ${Object.keys(ex3aSel).length} / 5${ex3aChecked ? " · Checked" : ""}`] },
         ],
       }
     );
@@ -1093,66 +1058,11 @@ const Week3Grammar = () => {
               <div className="focus-card">
                 <h4 className="font-serif text-xl text-olive mb-1">Infographic — If-Clauses Typ 3</h4>
                 <p className="subtle-note text-sm mb-5">The "Too Late" sentence: for past events that can no longer be changed.</p>
-
-                <div className="grid sm:grid-cols-2 gap-4">
-                  {/* Box 1 — Red */}
-                  <div className="rounded-2xl bg-red-50 border border-red-200 p-5">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="text-lg">🔴</span>
-                      <p className="font-sans text-sm font-bold text-red-700">It's 100% Impossible</p>
-                    </div>
-                    <p className="font-sans text-xs text-red-600 leading-relaxed">
-                      Use for past events that cannot be changed. The situation is over — you can only imagine what might have been different.
-                    </p>
-                  </div>
-
-                  {/* Box 2 — Green */}
-                  <div className="rounded-2xl bg-olive/10 border border-olive/30 p-5">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="text-lg">🟢</span>
-                      <p className="font-sans text-sm font-bold text-olive">The Winning Formula</p>
-                    </div>
-                    <p className="font-sans text-xs text-olive/80 leading-relaxed">
-                      <span className="font-semibold">If + Had + 3rd Form</span>
-                      <br />
-                      + <span className="font-semibold">Would / Could / Might Have + 3rd Form</span>
-                    </p>
-                    <p className="font-sans text-[11px] text-olive/60 mt-2 italic">
-                      "If she had studied, she would have passed."
-                    </p>
-                  </div>
-
-                  {/* Box 3 — Golden Rule */}
-                  <div className="rounded-2xl bg-amber-50 border border-amber-200 p-5">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="text-lg">⭐</span>
-                      <p className="font-sans text-sm font-bold text-amber-700">The Golden Rule: No "Would" in "If"</p>
-                    </div>
-                    <p className="font-sans text-xs text-amber-700 leading-relaxed">
-                      Never put <span className="font-semibold">"would"</span> inside the <span className="font-semibold">"if"</span> part of the sentence.
-                    </p>
-                    <div className="mt-3 space-y-1">
-                      <p className="font-sans text-[11px] text-red-500">✗ If I <span className="font-semibold">would have studied</span>…</p>
-                      <p className="font-sans text-[11px] text-olive">✓ If I <span className="font-semibold">had studied</span>…</p>
-                    </div>
-                  </div>
-
-                  {/* Box 4 — Comma Flip */}
-                  <div className="rounded-2xl bg-terracotta/10 border border-terracotta/20 p-5">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="text-lg">🔄</span>
-                      <p className="font-sans text-sm font-bold text-terracotta">The Comma Flip</p>
-                    </div>
-                    <p className="font-sans text-xs text-terracotta/80 leading-relaxed">
-                      Use a <span className="font-semibold">comma</span> if <span className="font-semibold">"If"</span> starts the sentence.
-                      Remove the comma if the "If" part comes second.
-                    </p>
-                    <div className="mt-3 space-y-1">
-                      <p className="font-sans text-[11px] text-chocolate/70 italic">If she had called<span className="font-bold text-terracotta">,</span> I would have helped.</p>
-                      <p className="font-sans text-[11px] text-chocolate/70 italic">I would have helped if she had called.</p>
-                    </div>
-                  </div>
-                </div>
+                <img
+                  src="/if-clauses-typ3.jpg"
+                  alt="If-Clauses Typ 3: The Too Late Sentence"
+                  className="w-full rounded-2xl object-contain"
+                />
               </div>
 
               {/* Quick Guide — all 3 types */}
@@ -1210,13 +1120,14 @@ const Week3Grammar = () => {
             </div>
           </section>
 
-          {/* ══ STEP 2 · CLASSIFY ══════════════════════════════════════════════ */}
+          {/* ══ STEP 2 · RECALL ═══════════════════════════════════════════════ */}
           <section className="mb-14">
-            <StepHeader step={2} tier="Classify" title="Sort & Match" xp={20} />
+            <StepHeader step={2} tier="Recall" title="Sort, Match & Identify" xp={20} />
             <div className="space-y-6">
 
               <div className="focus-card">
                 <h4 className="font-serif text-xl text-olive mb-1">Exercise 1 · Sort the sentences</h4>
+                <p className="subtle-note text-sm mb-5">Read sentences A–F. Sort each one into Type 1, 2, or 3.</p>
                 <Exercise1
                   selections={ex1Sel}
                   onChange={makeDropdownChange(setEx1Sel, setEx1Checked)}
@@ -1234,16 +1145,9 @@ const Week3Grammar = () => {
                   onCheck={() => setEx2aChecked(true)}
                 />
               </div>
-            </div>
-          </section>
-
-          {/* ══ STEP 3 · IDENTIFY ═════════════════════════════════════════════ */}
-          <section className="mb-14">
-            <StepHeader step={3} tier="Identify" title="Spot & Complete" xp={20} />
-            <div className="space-y-6">
 
               <div className="focus-card">
-                <h4 className="font-serif text-xl text-olive mb-1">Exercise 2B · Pick the correct sentence</h4>
+                <h4 className="font-serif text-xl text-olive mb-1">Exercise 2B · Find the correct sentence</h4>
                 <Exercise2B
                   selections={ex2bSel}
                   onChange={(id, val) => { setEx2bSel((p) => ({ ...p, [id]: val })); setEx2bChecked(false); }}
@@ -1273,16 +1177,10 @@ const Week3Grammar = () => {
                   onCheck={() => setEx2dChecked(true)}
                 />
               </div>
-            </div>
-          </section>
-
-          {/* ══ STEP 4 · PRACTICE ═════════════════════════════════════════════ */}
-          <section className="mb-14">
-            <StepHeader step={4} tier="Practice" title="Classify & Complete" xp={10} />
-            <div className="space-y-6">
 
               <div className="focus-card">
                 <h4 className="font-serif text-xl text-olive mb-1">Exercise 3A · Classify sentences</h4>
+                <p className="subtle-note text-sm mb-5">Write T1, T2, or T3 next to each sentence.</p>
                 <Exercise3A
                   selections={ex3aSel}
                   onChange={makeDropdownChange(setEx3aSel, setEx3aChecked)}
@@ -1290,59 +1188,74 @@ const Week3Grammar = () => {
                   onCheck={() => setEx3aChecked(true)}
                 />
               </div>
+            </div>
+          </section>
+
+          {/* ══ STEP 3 · UNDERSTAND ═══════════════════════════════════════════ */}
+          <section className="mb-14">
+            <StepHeader step={3} tier="Understand" title="Complete & Build" xp={20} />
+            <div className="space-y-6">
 
               <div className="focus-card">
-                <h4 className="font-serif text-xl text-olive mb-1">Exercise 3B · Complete the sentences</h4>
-                <Exercise3B
-                  values={ex3bVals}
-                  onChange={makeInputChange(setEx3bVals, setEx3bChecked)}
-                  checked={ex3bChecked}
-                  onCheck={() => setEx3bChecked(true)}
+                <h4 className="font-serif text-xl text-olive mb-1">Exercise 3B · Complete the verb forms</h4>
+                <p className="subtle-note text-sm mb-5">Write the correct form of the verb in brackets.</p>
+                <QuestionList
+                  questions={Q_STEP3_VERB}
+                  idPrefix="s3v"
+                  stepTitle="Step 3 · Verb Forms"
+                  answers={answers}
+                  submitted={submitted}
+                  onAnswerChange={handleAnswerChange}
+                  onSubmit={handleSubmit}
+                />
+              </div>
+
+              <div className="focus-card">
+                <h4 className="font-serif text-xl text-olive mb-1">Exercise 4 · Build the sentence</h4>
+                <p className="subtle-note text-sm mb-5">Use the word prompts to construct a complete Type 1 conditional sentence.</p>
+                <QuestionList
+                  questions={Q_STEP3_BUILD}
+                  idPrefix="s3b"
+                  stepTitle="Step 3 · Build the Sentence"
+                  answers={answers}
+                  submitted={submitted}
+                  onAnswerChange={handleAnswerChange}
+                  onSubmit={handleSubmit}
                 />
               </div>
             </div>
           </section>
 
-          {/* ══ STEP 5 · APPLY ════════════════════════════════════════════════ */}
+          {/* ══ STEP 4 · APPLY ════════════════════════════════════════════════ */}
           <section className="mb-20">
-            <StepHeader step={5} tier="Apply · Challenge" title="Build & Create" xp={10} />
+            <StepHeader step={4} tier="Apply · Challenge" title="The Party Story & Challenge Zone" xp={20} />
             <div className="space-y-6">
 
               <div className="focus-card">
-                <h4 className="font-serif text-xl text-olive mb-1">Exercise 4 · Build the sentence</h4>
-                <p className="subtle-note text-sm mb-5">
-                  Use the word prompts to construct complete Type 1 conditional sentences. Remember: correct verb forms, correct punctuation.
-                </p>
-                <Exercise4
-                  values={ex4Vals}
-                  onChange={makeInputChange(setEx4Vals, setEx4Checked)}
-                  checked={ex4Checked}
-                  onCheck={() => setEx4Checked(true)}
-                />
-              </div>
-
-              <div className="focus-card">
                 <h4 className="font-serif text-xl text-olive mb-1">Exercise 5 · The Party Story</h4>
-                <p className="subtle-note text-sm mb-5">
-                  Complete Peter's friend's advice using the correct conditional verb forms.
-                </p>
-                <Exercise5
-                  values={ex5Vals}
-                  onChange={makeInputChange(setEx5Vals, setEx5Checked)}
-                  checked={ex5Checked}
-                  onCheck={() => setEx5Checked(true)}
+                <div className="bg-terracotta/10 border border-terracotta/20 rounded-2xl px-5 py-4 mb-5">
+                  <p className="font-sans text-xs font-semibold text-terracotta uppercase tracking-wide mb-1">Read Peter's problem</p>
+                  <p className="font-sans text-sm text-chocolate leading-relaxed">{PARTY_STORY}</p>
+                </div>
+                <p className="subtle-note text-sm mb-5">Complete Helen's advice with the correct verb forms.</p>
+                <QuestionList
+                  questions={Q_STEP4_PARTY}
+                  idPrefix="s4p"
+                  stepTitle="Step 4 · Party Story"
+                  answers={answers}
+                  submitted={submitted}
+                  onAnswerChange={handleAnswerChange}
+                  onSubmit={handleSubmit}
                 />
               </div>
 
               <div className="focus-card">
                 <h4 className="font-serif text-xl text-olive mb-1">Exercise 6 · Challenge Zone</h4>
-                <p className="subtle-note text-sm mb-5">
-                  Write three of your own Type 3 conditional sentences. Think about past regrets or different outcomes — real or imaginary.
-                </p>
+                <p className="subtle-note text-sm mb-5">Write three of your own Type 3 conditional sentences.</p>
                 <QuestionList
                   questions={Q_CHALLENGE}
-                  idPrefix="ex6"
-                  stepTitle="Step 5 · Challenge Zone"
+                  idPrefix="s4c"
+                  stepTitle="Step 4 · Challenge Zone"
                   answers={answers}
                   submitted={submitted}
                   onAnswerChange={handleAnswerChange}
