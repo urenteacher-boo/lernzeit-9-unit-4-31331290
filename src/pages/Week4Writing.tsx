@@ -26,10 +26,10 @@ const Q_STEP2_SENT: { q: string; hint?: string }[] = [
   { q: "Write one sentence AGAINST your topic:", hint: "Use: However, … / On the other hand, …" },
 ];
 
-const Q_STEP3: { q: string; hint?: string }[] = [
+const makeQ_STEP3 = (topic: string) => [
   {
     q: "Paragraph 1 – Introduction",
-    hint: 'Complete: "Many people have different opinions about this topic. Some people are in favour of it, while others are against it. So, should ___?"',
+    hint: `Complete: "Many people have different opinions about ${topic}. Some people are in favour of it, while others are against it. So, should ${topic.replace(/\?$/, "")}?"`,
   },
   {
     q: "Paragraph 2 – Arguments For (2–3 sentences)",
@@ -254,7 +254,7 @@ interface TopicPickerProps {
 }
 const TopicPicker = ({ selected, onChange }: TopicPickerProps) => (
   <div className="space-y-3">
-    <p className="subtle-note text-sm">Choose one topic for your discussion essay. You will use this topic throughout the worksheet.</p>
+    <p className="subtle-note text-sm">Choose one topic for your written discussion. You will use this topic throughout all tasks.</p>
     {TOPICS.map((topic, idx) => {
       const isSelected = selected === idx;
       return (
@@ -447,8 +447,9 @@ const StarterMatch = ({ sel, onChange, checked, onCheck }: StarterMatchProps) =>
 interface EssayEditorProps {
   value: string;
   onChange: (val: string) => void;
+  topic?: string;
 }
-const EssayEditor = ({ value, onChange }: EssayEditorProps) => {
+const EssayEditor = ({ value, onChange, topic }: EssayEditorProps) => {
   const wordCount = value.trim() === "" ? 0 : value.trim().split(/\s+/).filter(Boolean).length;
 
   const colorClass =
@@ -486,7 +487,7 @@ const EssayEditor = ({ value, onChange }: EssayEditorProps) => {
         value={value}
         onChange={(e) => onChange(e.target.value)}
         rows={12}
-        placeholder="Write your discussion here (120–150 words)…"
+        placeholder={topic ? `Write your written discussion about: "${topic}" (120–150 words)…` : "Write your written discussion here (120–150 words)…"}
         className="w-full bg-sage/40 rounded-xl px-4 py-3 font-sans text-sm text-chocolate placeholder:text-olive/40 outline-none focus:ring-2 focus:ring-terracotta/60 resize-none"
       />
       {/* Word count display */}
@@ -515,7 +516,7 @@ const SELF_CHECK_ITEMS = [
   "I used linking words.",
   "I wrote my opinion.",
   "I checked spelling.",
-  "My text has about 120–150 words.",
+  "My written discussion has about 120–150 words.",
 ];
 
 const SelfCheckList = () => {
@@ -649,6 +650,10 @@ const Week4Writing = () => {
     Object.values(answers).some((v) => v?.trim()) ||
     essay.trim().length > 0;
 
+  // ── Topic-aware helpers ───────────────────────────────────────────────────
+  const topicLabel = selectedTopic !== null ? TOPICS[selectedTopic] : null;
+  const Q_STEP3 = makeQ_STEP3(topicLabel ?? "this topic");
+
   // ── PDF word count helper ─────────────────────────────────────────────────
   const essayWordCount = essay.trim() === "" ? 0 : essay.trim().split(/\s+/).filter(Boolean).length;
 
@@ -742,7 +747,7 @@ const Week4Writing = () => {
                   Vocabulary &amp; Writing
                 </h1>
                 <p className="subtle-note text-lg mt-3 max-w-2xl">
-                  Build your discussion vocabulary, plan your arguments, and write a structured essay in German and English.
+                  Build your discussion vocabulary, plan your arguments, and write a structured written discussion.
                 </p>
               </div>
               <div className="flex flex-col items-end gap-2 mt-1">
@@ -755,15 +760,12 @@ const Week4Writing = () => {
 
           {/* ══ STEP 1 · SPARK ══════════════════════════════════════════════════ */}
           <section className="mb-14">
-            <StepHeader step={1} tier="Spark" title="Understand the Topic (Inclusive Level)" xp={20} />
+            <StepHeader step={1} tier="Spark" title="Understand the Topic" xp={20} />
             <div className="space-y-6">
 
               {/* Vocab Reference Card */}
               <div className="focus-card">
-                <h4 className="font-serif text-xl text-olive mb-1">Vocabulary Reference Card</h4>
-                <p className="subtle-note text-sm mb-5">
-                  Use this bilingual card throughout the worksheet. It contains all the key words and sentence starters you need.
-                </p>
+                <h4 className="font-serif text-xl text-olive mb-4">Vocabulary Reference Card</h4>
                 <VocabReferenceCard />
               </div>
 
@@ -818,11 +820,18 @@ const Week4Writing = () => {
             <StepHeader step={2} tier="Build" title="Plan Your Arguments" xp={20} />
             <div className="space-y-6">
 
+              {topicLabel && (
+                <div className="flex items-center gap-3 bg-olive/10 border border-olive/20 rounded-2xl px-5 py-3">
+                  <span className="font-sans text-xs font-bold text-olive uppercase tracking-wide flex-shrink-0">Your topic:</span>
+                  <span className="font-sans text-sm text-chocolate">{topicLabel}</span>
+                </div>
+              )}
+
               {/* Task 1 · Arguments Table */}
               <div className="focus-card">
                 <h4 className="font-serif text-xl text-olive mb-1">Task 1 · Complete the Arguments Table</h4>
                 <p className="subtle-note text-sm mb-5">
-                  Write three arguments FOR and three arguments AGAINST your chosen topic.
+                  Write three arguments FOR and three arguments AGAINST{topicLabel ? `: "${topicLabel}"` : " your chosen topic"}.
                 </p>
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
@@ -886,10 +895,17 @@ const Week4Writing = () => {
             <StepHeader step={3} tier="Stretch" title="Build Your Paragraphs" xp={20} />
             <div className="space-y-6">
 
+              {topicLabel && (
+                <div className="flex items-center gap-3 bg-olive/10 border border-olive/20 rounded-2xl px-5 py-3">
+                  <span className="font-sans text-xs font-bold text-olive uppercase tracking-wide flex-shrink-0">Your topic:</span>
+                  <span className="font-sans text-sm text-chocolate">{topicLabel}</span>
+                </div>
+              )}
+
               <div className="focus-card">
                 <h4 className="font-serif text-xl text-olive mb-1">Write Your Four Paragraphs</h4>
                 <p className="subtle-note text-sm mb-5">
-                  Use the hints below each question to structure your paragraphs. Save each one as you go.
+                  Use the hints to structure your written discussion. Save each paragraph as you go.
                 </p>
                 <QuestionList
                   questions={Q_STEP3}
@@ -910,24 +926,31 @@ const Week4Writing = () => {
             <StepHeader step={4} tier="Remix" title="Creative Writing Challenge" xp={20} />
             <div className="space-y-6">
 
+              {topicLabel && (
+                <div className="flex items-center gap-3 bg-olive/10 border border-olive/20 rounded-2xl px-5 py-3">
+                  <span className="font-sans text-xs font-bold text-olive uppercase tracking-wide flex-shrink-0">Your topic:</span>
+                  <span className="font-sans text-sm text-chocolate">{topicLabel}</span>
+                </div>
+              )}
+
               {/* Useful Phrases Reference */}
               <UsefulPhrasesCard />
 
               {/* Essay Editor */}
               <div className="focus-card">
-                <h4 className="font-serif text-xl text-olive mb-1">Write Your Discussion Essay</h4>
+                <h4 className="font-serif text-xl text-olive mb-1">Write Your Written Discussion</h4>
                 <p className="subtle-note text-sm mb-5">
-                  Write a complete discussion essay of 120–150 words. Use your paragraph notes from Step 3 as a guide.
-                  The word counter below tracks your progress in real time.
+                  Write a complete written discussion of 120–150 words. Use your paragraph notes from Step 3 as a guide.
+                  The word counter tracks your progress in real time.
                 </p>
-                <EssayEditor value={essay} onChange={setEssay} />
+                <EssayEditor value={essay} onChange={setEssay} topic={topicLabel ?? undefined} />
               </div>
 
               {/* Self-Check */}
               <div className="focus-card">
                 <h4 className="font-serif text-xl text-olive mb-1">Self-Check</h4>
                 <p className="subtle-note text-sm mb-5">
-                  Review your essay using this checklist before you submit.
+                  Review your written discussion using this checklist before you finish.
                 </p>
                 <SelfCheckList />
               </div>
