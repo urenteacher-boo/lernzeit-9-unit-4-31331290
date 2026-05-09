@@ -16,7 +16,7 @@ const TOPICS = [
   "Should schools start later?",
 ];
 
-interface Argument { text: string; hint: string; }
+interface Argument { text: string; hint: string; correct: boolean; }
 interface SentenceGuide {
   label: string;
   starter: string;
@@ -42,14 +42,20 @@ const TOPIC_DATA: TopicData[] = [
   // ── Topic 0: Social media banned under 15 ──────────────────────────────────
   {
     forArgs: [
-      { text: "It protects children from cyberbullying and harmful content.", hint: "schützt vor Cybermobbing" },
-      { text: "Children would spend more time on education and hobbies.", hint: "mehr Zeit für Schule und Hobbys" },
-      { text: "It could improve children's mental health and sleep.", hint: "bessere psychische Gesundheit" },
+      { text: "It protects children from cyberbullying and harmful content.", hint: "schützt vor Cybermobbing", correct: true },
+      { text: "Children could use the extra time to learn the capitals of every country.", hint: "🚫 irrelevant — not a real reason to ban social media", correct: false },
+      { text: "Children would spend more time on education and hobbies.", hint: "mehr Zeit für Schule und Hobbys", correct: true },
+      { text: "Phone companies would have to design special phones for adults only.", hint: "🚫 not a benefit for children", correct: false },
+      { text: "It could improve children's mental health and sleep.", hint: "bessere psychische Gesundheit", correct: true },
+      { text: "Children would sleep exactly 12 hours every night without social media.", hint: "🚫 exaggerated and not realistic", correct: false },
     ],
     againstArgs: [
-      { text: "It would be unfair, especially for 13- and 14-year-olds.", hint: "ungerecht für Ältere" },
-      { text: "It would be very difficult to control or enforce.", hint: "schwer durchzusetzen" },
-      { text: "Children might lose contact with friends and miss information.", hint: "Kontaktverlust zu Freunden" },
+      { text: "It would be unfair, especially for 13- and 14-year-olds.", hint: "ungerecht für Ältere", correct: true },
+      { text: "Without social media, children would forget how to read and write.", hint: "🚫 exaggerated and not true", correct: false },
+      { text: "It would be very difficult to control or enforce.", hint: "schwer durchzusetzen", correct: true },
+      { text: "A ban would make social media more exciting and desirable for adults.", hint: "🚫 irrelevant to children", correct: false },
+      { text: "Children might lose contact with friends and miss important information.", hint: "Kontaktverlust zu Freunden", correct: true },
+      { text: "Children use social media mainly to remind each other about homework.", hint: "🚫 not a real argument — too trivial", correct: false },
     ],
     paragraphs: [
       {
@@ -99,14 +105,20 @@ const TOPIC_DATA: TopicData[] = [
   // ── Topic 1: AI tools for homework ────────────────────────────────────────
   {
     forArgs: [
-      { text: "AI can help students understand difficult topics more easily.", hint: "hilft beim Verstehen schwieriger Themen" },
-      { text: "It saves time and allows students to focus on other tasks.", hint: "spart Zeit" },
-      { text: "Using AI teaches important digital skills for the future.", hint: "wichtige digitale Kompetenzen" },
+      { text: "AI can help students understand difficult topics more easily.", hint: "hilft beim Verstehen schwieriger Themen", correct: true },
+      { text: "AI tools could also help students choose what to eat for breakfast.", hint: "🚫 irrelevant to homework or learning", correct: false },
+      { text: "It saves time and allows students to focus on other tasks.", hint: "spart Zeit", correct: true },
+      { text: "Students who use AI would automatically become software engineers.", hint: "🚫 exaggerated and not realistic", correct: false },
+      { text: "Using AI teaches important digital skills for the future.", hint: "wichtige digitale Kompetenzen", correct: true },
+      { text: "AI would help teachers mark homework faster so they can go home earlier.", hint: "🚫 off-topic — about teachers, not students", correct: false },
     ],
     againstArgs: [
-      { text: "Students may copy AI answers without really learning.", hint: "könnten schummeln / abschreiben" },
-      { text: "AI is not always reliable and can give wrong information.", hint: "nicht immer zuverlässig" },
-      { text: "It is unfair to students who do not have access to AI.", hint: "ungerecht für benachteiligte Schüler" },
+      { text: "Students may copy AI answers without really learning.", hint: "könnten schummeln / abschreiben", correct: true },
+      { text: "AI cannot answer questions about the weather in ancient Rome.", hint: "🚫 false and irrelevant", correct: false },
+      { text: "AI is not always reliable and can give wrong information.", hint: "nicht immer zuverlässig", correct: true },
+      { text: "Using AI for homework would make pencils completely unnecessary.", hint: "🚫 exaggerated and silly", correct: false },
+      { text: "It is unfair to students who do not have access to AI.", hint: "ungerecht für benachteiligte Schüler", correct: true },
+      { text: "AI tools only work in English, so German students cannot use them.", hint: "🚫 false — AI works in many languages", correct: false },
     ],
     paragraphs: [
       {
@@ -156,14 +168,20 @@ const TOPIC_DATA: TopicData[] = [
   // ── Topic 2: Schools start later ──────────────────────────────────────────
   {
     forArgs: [
-      { text: "Teenagers would get more sleep and feel less tired during the day.", hint: "mehr Schlaf, weniger Müdigkeit" },
-      { text: "Students would concentrate better in lessons and achieve better results.", hint: "bessere Konzentration und Leistungen" },
-      { text: "It could improve students' physical and mental health significantly.", hint: "bessere körperliche und geistige Gesundheit" },
+      { text: "Teenagers would get more sleep and feel less tired during the day.", hint: "mehr Schlaf, weniger Müdigkeit", correct: true },
+      { text: "Students would have more time to watch cartoons in the morning.", hint: "🚫 irrelevant — not a benefit of education", correct: false },
+      { text: "Students would concentrate better in lessons and achieve better results.", hint: "bessere Konzentration und Leistungen", correct: true },
+      { text: "Breakfast cereal companies would earn more money from bigger breakfasts.", hint: "🚫 irrelevant — not about school or students", correct: false },
+      { text: "It could improve students' physical and mental health significantly.", hint: "bessere körperliche und geistige Gesundheit", correct: true },
+      { text: "School buses could be used for shopping deliveries in the early morning.", hint: "🚫 ridiculous and unrelated", correct: false },
     ],
     againstArgs: [
-      { text: "It would cause problems for parents who need to go to work early.", hint: "Probleme für berufstätige Eltern" },
-      { text: "After-school activities like sports would start very late.", hint: "Nachmittagsaktivitäten beginnen spät" },
-      { text: "It may be difficult to reorganise school transport and timetables.", hint: "logistische Probleme mit Schulbussen" },
+      { text: "It would cause problems for parents who need to go to work early.", hint: "Probleme für berufstätige Eltern", correct: true },
+      { text: "If school starts later, students would miss important morning news programmes.", hint: "🚫 not a serious argument", correct: false },
+      { text: "After-school activities like sports would start very late.", hint: "Nachmittagsaktivitäten beginnen spät", correct: true },
+      { text: "Mosquitoes would have more time to attack students at bus stops.", hint: "🚫 ridiculous — not relevant", correct: false },
+      { text: "It may be difficult to reorganise school transport and timetables.", hint: "logistische Probleme mit Schulbussen", correct: true },
+      { text: "Students would need to buy more expensive alarm clocks to wake up later.", hint: "🚫 trivial and not a real concern", correct: false },
     ],
     paragraphs: [
       {
@@ -338,26 +356,71 @@ const TopicPicker = ({ selected, onChange }: { selected: number | null; onChange
 );
 
 // ── ArgumentCheckboxes ────────────────────────────────────────────────────────
-const ArgumentCheckboxes = ({ args, checked, onChange, color }: {
+const ArgumentCheckboxes = ({ args, checked, onChange, color, isChecked, onCheck }: {
   args: Argument[];
   checked: Record<number, boolean>;
   onChange: (idx: number, val: boolean) => void;
   color: "green" | "red";
+  isChecked: boolean;
+  onCheck: () => void;
 }) => {
-  const cls = color === "green"
-    ? { check: "accent-green-600", on: "bg-green-50 border-green-300", off: "bg-cream border-transparent hover:bg-sage/40", label: "text-green-700" }
-    : { check: "accent-red-600", on: "bg-red-50 border-red-300", off: "bg-cream border-transparent hover:bg-sage/40", label: "text-red-700" };
+  const score = isChecked
+    ? args.filter((a, i) => a.correct === !!checked[i]).length
+    : 0;
+  const perfect = score === args.length;
+
   return (
     <div className="space-y-2">
-      {args.map((arg, idx) => (
-        <label key={idx} className={`flex items-start gap-3 rounded-xl px-4 py-2.5 cursor-pointer border transition-all ${checked[idx] ? cls.on : cls.off}`}>
-          <input type="checkbox" checked={!!checked[idx]} onChange={(e) => onChange(idx, e.target.checked)} className={`${cls.check} mt-0.5 flex-shrink-0`} />
-          <div className="flex-1">
-            <p className="font-sans text-sm text-chocolate">{arg.text}</p>
-            <p className="font-sans text-[11px] text-olive/60 italic mt-0.5">{arg.hint}</p>
-          </div>
-        </label>
-      ))}
+      <p className="font-sans text-[11px] text-olive/60 italic mb-1">
+        Tick the <strong>3 suitable arguments</strong> — ignore the absurd ones.
+      </p>
+      {args.map((arg, idx) => {
+        const ticked   = !!checked[idx];
+        const wasRight = isChecked && arg.correct === ticked;
+        const wasWrong = isChecked && arg.correct !== ticked;
+
+        let rowClass = "bg-cream border-transparent hover:bg-sage/40";
+        if (isChecked && arg.correct && ticked)  rowClass = "bg-green-50 border-green-300";
+        if (isChecked && arg.correct && !ticked) rowClass = "bg-amber-50 border-amber-300";
+        if (isChecked && !arg.correct && ticked) rowClass = "bg-red-50 border-red-300";
+        if (isChecked && !arg.correct && !ticked) rowClass = "bg-cream border-transparent";
+
+        return (
+          <label key={idx} className={`flex items-start gap-3 rounded-xl px-4 py-2.5 cursor-pointer border transition-all ${isChecked ? "cursor-default" : "cursor-pointer"} ${rowClass}`}>
+            <input type="checkbox" checked={ticked} disabled={isChecked}
+              onChange={(e) => onChange(idx, e.target.checked)}
+              className={`${color === "green" ? "accent-green-600" : "accent-red-600"} mt-0.5 flex-shrink-0`} />
+            <div className="flex-1">
+              <p className="font-sans text-sm text-chocolate">{arg.text}</p>
+              {!isChecked && (
+                <p className="font-sans text-[11px] text-olive/50 italic mt-0.5">{arg.correct ? arg.hint : "🤔 Is this really relevant?"}</p>
+              )}
+              {isChecked && (
+                <p className={`font-sans text-[11px] font-semibold mt-0.5 ${arg.correct && ticked ? "text-green-700" : arg.correct && !ticked ? "text-amber-700" : !arg.correct && ticked ? "text-red-600" : "text-olive/50"}`}>
+                  {arg.correct && ticked  ? "✓ Correct — this is a suitable argument." : ""}
+                  {arg.correct && !ticked ? "⚠ You missed this one — it is a suitable argument." : ""}
+                  {!arg.correct && ticked ? "✗ Absurd! This argument is not suitable." : ""}
+                  {!arg.correct && !ticked ? "✓ Good — you correctly ignored this absurd argument." : ""}
+                </p>
+              )}
+            </div>
+          </label>
+        );
+      })}
+
+      {!isChecked && (
+        <button onClick={onCheck}
+          className="mt-2 px-5 py-2.5 rounded-full bg-olive text-cream font-sans font-semibold text-sm hover:bg-olive/90 transition-colors">
+          Check my choices
+        </button>
+      )}
+      {isChecked && (
+        <div className={`flex items-center gap-3 rounded-xl px-4 py-3 border animate-fade-in ${perfect ? "bg-olive/10 border-olive/30" : "bg-amber-50 border-amber-200"}`}>
+          <p className={`font-sans text-sm font-semibold ${perfect ? "text-olive" : "text-amber-700"}`}>
+            {score} / {args.length} correct{perfect ? " — Perfect!" : " — review the highlighted ones."}
+          </p>
+        </div>
+      )}
     </div>
   );
 };
@@ -530,8 +593,10 @@ const Week4Writing = () => {
   const [selectedTopic, setSelectedTopic] = useState<number | null>(null);
 
   // Step 2
-  const [forChecked, setForChecked]         = useState<Record<number, boolean>>({});
-  const [againstChecked, setAgainstChecked] = useState<Record<number, boolean>>({});
+  const [forTicked, setForTicked]               = useState<Record<number, boolean>>({});
+  const [againstTicked, setAgainstTicked]       = useState<Record<number, boolean>>({});
+  const [forArgChecked, setForArgChecked]       = useState(false);
+  const [againstArgChecked, setAgainstArgChecked] = useState(false);
   const [starterSel, setStarterSel]         = useState<Record<string, string>>({});
   const [starterChecked, setStarterChecked] = useState(false);
   const [step2Sentences, setStep2Sentences] = useState<Record<string, string>>({});
@@ -551,7 +616,8 @@ const Week4Writing = () => {
   const hasAnyProgress =
     Object.keys(wordSel).length > 0 ||
     selectedTopic !== null ||
-    Object.values(forChecked).some(Boolean) ||
+    Object.values(forTicked).some(Boolean) ||
+    Object.values(againstTicked).some(Boolean) ||
     Object.values(starterSel).length > 0 ||
     Object.values(step2Sentences).some((v) => v?.trim()) ||
     Object.values(paraValues).some((v) => v?.trim()) ||
@@ -630,7 +696,7 @@ const Week4Writing = () => {
 
               <div className="focus-card">
                 <h4 className="font-serif text-xl text-olive mb-1">Task 2 · Choose Your Topic</h4>
-                <TopicPicker selected={selectedTopic} onChange={(i) => { setSelectedTopic(i); setForChecked({}); setAgainstChecked({}); setParaValues({}); setEssay(""); }} />
+                <TopicPicker selected={selectedTopic} onChange={(i) => { setSelectedTopic(i); setForTicked({}); setAgainstTicked({}); setForArgChecked(false); setAgainstArgChecked(false); setParaValues({}); setEssay(""); }} />
                 {selectedTopic !== null && (
                   <div className="mt-5 flex items-center gap-3 bg-olive/10 border border-olive/20 rounded-2xl px-5 py-3 animate-fade-in">
                     <Check className="w-4 h-4 text-olive flex-shrink-0" />
@@ -662,11 +728,11 @@ const Week4Writing = () => {
                     <div className="grid md:grid-cols-2 gap-6">
                       <div>
                         <p className="font-sans text-xs font-bold text-green-700 uppercase tracking-wide mb-3">Arguments FOR</p>
-                        <ArgumentCheckboxes args={topic.forArgs} checked={forChecked} onChange={(idx, v) => setForChecked((p) => ({ ...p, [idx]: v }))} color="green" />
+                        <ArgumentCheckboxes args={topic.forArgs} checked={forTicked} onChange={(idx, v) => setForTicked((p) => ({ ...p, [idx]: v }))} color="green" isChecked={forArgChecked} onCheck={() => setForArgChecked(true)} />
                       </div>
                       <div>
                         <p className="font-sans text-xs font-bold text-red-700 uppercase tracking-wide mb-3">Arguments AGAINST</p>
-                        <ArgumentCheckboxes args={topic.againstArgs} checked={againstChecked} onChange={(idx, v) => setAgainstChecked((p) => ({ ...p, [idx]: v }))} color="red" />
+                        <ArgumentCheckboxes args={topic.againstArgs} checked={againstTicked} onChange={(idx, v) => setAgainstTicked((p) => ({ ...p, [idx]: v }))} color="red" isChecked={againstArgChecked} onCheck={() => setAgainstArgChecked(true)} />
                       </div>
                     </div>
                   </div>
