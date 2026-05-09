@@ -7,7 +7,7 @@ const WEEKS = [
   { n: 1, label: "Reading",    subtitle: "\"The Highlight Reel\"",  color: "bg-moss" },
   { n: 2, label: "Listening",  subtitle: "\"Do You Feel Seen?\"",   color: "bg-terracotta" },
   { n: 3, label: "Grammar",    subtitle: "\"Fix the Caption\"",      color: "bg-olive" },
-  { n: 4, label: "Vocabulary", subtitle: "\"Words We Live By\"",     color: "bg-sand" },
+  { n: 4, label: "Vocab & Writing", subtitle: "\"Say It, Write It\"", color: "bg-sand" },
   { n: 5, label: "Speaking",   subtitle: "\"Your 30-Sec Take\"",     color: "bg-stone-olive" },
   { n: 6, label: "Revision",   subtitle: "\"Remix & Share\"",        color: "bg-chocolate" },
 ];
@@ -68,7 +68,7 @@ export default function Home() {
               {WEEKS.map((w) => (
                 <button
                   key={w.n}
-                  onClick={() => w.n === 1 ? navigate("/week/1") : w.n === 2 ? navigate("/week/2") : w.n === 3 ? navigate("/week/3") : undefined}
+                  onClick={() => w.n === 1 ? navigate("/week/1") : w.n === 2 ? navigate("/week/2") : w.n === 3 ? navigate("/week/3") : w.n === 4 ? navigate("/week/4") : undefined}
                   className={`curriculum-card group relative aspect-[4/3] ${w.color} rounded-[2rem] overflow-hidden shadow-lg text-left focus-card-lift`}
                 >
                   {/* Leaf pattern overlay */}
