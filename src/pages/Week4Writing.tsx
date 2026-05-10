@@ -636,11 +636,11 @@ const Week4Writing = () => {
         answersTitle: "Written Work",
         filenameWeek: "Week4",
         activities: [
-          { badge: "Task 1 · Word Match", lines: [`Matched: ${Object.keys(wordSel).length} / 4${wordChecked ? " · Checked" : ""}`] },
-          { badge: "Task 2 · Topic Choice", lines: [topicLabel ?? "No topic selected"] },
-          { badge: "Step 2 · Ideas", lines: [`FOR: ${Object.values(forChecked).filter(Boolean).length} / 3  ·  AGAINST: ${Object.values(againstChecked).filter(Boolean).length} / 3`] },
-          { badge: "Step 3 · Paragraphs", lines: [`Sentences filled: ${Object.values(paraValues).filter((v) => v?.trim()).length}`] },
-          { badge: "Step 4 · Written Discussion", lines: [`Word count: ${essayWordCount} / 150 target`, essay.trim() ? essay.trim().slice(0, 80) + "…" : "Not started yet."] },
+          { badge: "Task 1 - Word Match", lines: [`Matched: ${Object.keys(wordSel).length} / 4${wordChecked ? " - Checked" : ""}`] },
+          { badge: "Task 2 - Topic Choice", lines: [topicLabel ?? "No topic selected"] },
+          { badge: "Step 2 - Ideas", lines: [`FOR: ${Object.values(forTicked).filter(Boolean).length} / 3  -  AGAINST: ${Object.values(againstTicked).filter(Boolean).length} / 3`] },
+          { badge: "Step 3 - Paragraphs", lines: [`Sentences filled: ${Object.values(paraValues).filter((v) => v?.trim()).length}`] },
+          { badge: "Step 4 - Written Discussion", lines: [`Word count: ${essayWordCount} / 150 target`, essay.trim() ? essay.trim().slice(0, 80) + "..." : "Not started yet."] },
         ],
       }
     );
