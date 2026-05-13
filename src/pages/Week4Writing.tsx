@@ -626,9 +626,61 @@ const Week4Writing = () => {
   const essayWordCount = essay.trim() ? essay.trim().split(/\s+/).filter(Boolean).length : 0;
 
   const handleDownloadPdf = () => {
+    // Build blocks from all written content
+    const pdfBlocks: Parameters<typeof generateProgressPdf>[1] = [];
+
+    // Step 2 — one sentence each side
+    if (step2Sentences["for"]?.trim() || step2Sentences["against"]?.trim()) {
+      pdfBlocks.push({
+        stepTitle: "Step 2 - One Sentence Each Side",
+        questions: [
+          { q: "FOR sentence:" },
+          { q: "AGAINST sentence:" },
+        ],
+        answers: {
+          "s2s-0": step2Sentences["for"] ? `Firstly, ${step2Sentences["for"]}` : "",
+          "s2s-1": step2Sentences["against"] ? `However, ${step2Sentences["against"]}` : "",
+        },
+        submitted: { "s2s-0": true, "s2s-1": true },
+        idPrefix: "s2s",
+      });
+    }
+
+    // Step 3 — paragraph builder sentences
+    if (topic) {
+      topic.paragraphs.forEach((para, pi) => {
+        const questions = para.sentences.map((s) => ({ q: `${s.label}: ${s.starter}` }));
+        const ans: Record<string, string> = {};
+        para.sentences.forEach((s, si) => {
+          const val = paraValues[`${para.title}-${si}`] || "";
+          ans[`p${pi}-${si}`] = val ? `${s.starter} ${val}` : "";
+        });
+        if (Object.values(ans).some((v) => v.trim())) {
+          pdfBlocks.push({
+            stepTitle: `Step 3 - ${para.title}`,
+            questions,
+            answers: ans,
+            submitted: Object.fromEntries(para.sentences.map((_, si) => [`p${pi}-${si}`, true])),
+            idPrefix: `p${pi}`,
+          });
+        }
+      });
+    }
+
+    // Step 4 — full essay
+    if (essay.trim()) {
+      pdfBlocks.push({
+        stepTitle: "Step 4 - Written Discussion",
+        questions: [{ q: `Written discussion (${essayWordCount} words):` }],
+        answers: { "essay-0": essay.trim() },
+        submitted: { "essay-0": true },
+        idPrefix: "essay",
+      });
+    }
+
     generateProgressPdf(
       week4Name,
-      [],
+      pdfBlocks,
       {
         weekLabel: "WEEK 4 VOCAB & WRITING",
         pageTitle: "Vocabulary & Writing",

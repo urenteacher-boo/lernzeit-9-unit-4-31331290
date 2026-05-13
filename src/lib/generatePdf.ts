@@ -127,7 +127,7 @@ export function generateProgressPdf(
   for (const block of blocks) {
     block.questions.forEach((item, i) => {
       const id = `${block.idPrefix}-${i}`;
-      if (block.submitted[id] && block.answers[id]?.trim()) {
+      if (block.answers[id]?.trim()) {
         sections.push({ step: block.stepTitle, q: item.q, a: block.answers[id].trim() });
       }
     });
