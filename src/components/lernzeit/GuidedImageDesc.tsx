@@ -60,7 +60,7 @@ export const GuidedImageDesc = ({ imgSrc, imgAlt }: Props) => {
   return (
     <div className="space-y-5">
       <div className="rounded-2xl overflow-hidden border border-olive/10">
-        <img src={imgSrc} alt={imgAlt} className="w-full object-cover max-h-72 object-top" />
+        <img src={imgSrc} alt={imgAlt} className="w-full h-auto" />
       </div>
 
       <p className="subtle-note text-sm">

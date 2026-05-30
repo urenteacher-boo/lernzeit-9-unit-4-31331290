@@ -3,13 +3,6 @@ import { Mic, Hash } from "lucide-react";
 
 const IMAGES = [
   {
-    id: "a",
-    src: "/images/speaking-a.jpg",
-    alt: "Teenager at desk at 2:47 am surrounded by social media screens, homework untouched",
-    title: "Image A",
-    theme: "Screen time & FOMO",
-  },
-  {
     id: "b",
     src: "/images/speaking-b.jpg",
     alt: "Family staging a perfect picnic photo while teenager is on phone and toddler cries",
@@ -108,7 +101,7 @@ export const TalkBuilder = () => {
         <p className="font-sans text-xs font-semibold text-olive/70 uppercase tracking-wide mb-3">
           Step A — Choose your image
         </p>
-        <div className="grid sm:grid-cols-3 gap-3">
+        <div className="grid sm:grid-cols-2 gap-3">
           {IMAGES.map((im) => (
             <button
               key={im.id}
