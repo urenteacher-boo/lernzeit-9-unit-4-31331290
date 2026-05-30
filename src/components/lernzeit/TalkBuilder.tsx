@@ -115,7 +115,7 @@ export const TalkBuilder = () => {
               <img
                 src={im.src}
                 alt={im.alt}
-                className="w-full h-36 object-cover object-top"
+                className="w-full h-auto"
               />
               <div className="p-3 bg-cream">
                 <p className="font-sans text-xs font-semibold text-olive">{im.title}</p>
@@ -133,7 +133,7 @@ export const TalkBuilder = () => {
             <img
               src={img.src}
               alt={img.alt}
-              className="w-full object-cover max-h-56 object-top"
+              className="w-full h-auto"
             />
           </div>
 
