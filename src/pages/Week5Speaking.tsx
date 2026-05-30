@@ -157,10 +157,16 @@ const Week5Speaking = () => {
                   Build your vocabulary, practise sentence starters, describe a guided image — then deliver your own 1-minute talk about Generation Like.
                 </p>
               </div>
-              <div className="mt-1">
+              <div className="mt-1 flex items-center gap-2">
                 <p className="text-[11px] tracking-[0.18em] uppercase text-olive/60">
                   Logged in as <span className="text-olive font-semibold">{week5Name}</span>
                 </p>
+                <button
+                  onClick={() => setWeek5Name("")}
+                  className="text-[11px] text-olive/40 hover:text-terracotta underline underline-offset-2 transition-colors"
+                >
+                  Change
+                </button>
               </div>
             </div>
           </header>
