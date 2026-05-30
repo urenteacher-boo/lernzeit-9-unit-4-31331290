@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { LernzeitSidebar } from "@/components/lernzeit/Sidebar";
 import { StepHeader } from "@/components/lernzeit/StepHeader";
 import { QuestionList } from "@/components/lernzeit/QuestionList";
@@ -90,8 +91,8 @@ const Week5Speaking = () => {
   const { week5Name, setWeek5Name } = useUser();
   const navigate = useNavigate();
 
-  const [answers, setAnswers]     = useState<Record<string, string>>({});
-  const [submitted, setSubmitted] = useState<Record<string, boolean>>({});
+  const [answers, setAnswers]     = useLocalStorage<Record<string, string>>("w5-answers", {});
+  const [submitted, setSubmitted] = useLocalStorage<Record<string, boolean>>("w5-submitted", {});
 
   const handleAnswerChange = (id: string, value: string) =>
     setAnswers((prev) => ({ ...prev, [id]: value }));

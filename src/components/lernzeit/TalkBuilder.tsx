@@ -1,5 +1,6 @@
-import { useState, useMemo } from "react";
+import { useMemo } from "react";
 import { Mic, Hash } from "lucide-react";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 const IMAGES = [
   {
@@ -59,8 +60,8 @@ const OPINION_RE =
   /\b(I think|in my opinion|I believe|what strikes me|what I find|personally|I feel|to me|for me)\b/i;
 
 export const TalkBuilder = () => {
-  const [selectedImg, setSelectedImg] = useState<string | null>(null);
-  const [sections, setSections] = useState<Record<string, string>>({});
+  const [selectedImg, setSelectedImg] = useLocalStorage<string | null>("w5-talk-img", null);
+  const [sections, setSections] = useLocalStorage<Record<string, string>>("w5-talk-sections", {});
 
   const fullText = Object.values(sections).join(" ");
   const wordCount = fullText.trim() ? fullText.trim().split(/\s+/).length : 0;

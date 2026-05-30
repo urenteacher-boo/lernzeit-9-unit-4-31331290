@@ -1,4 +1,5 @@
-import { createContext, useContext, useState, type ReactNode } from "react";
+import { createContext, useContext, type ReactNode } from "react";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 interface UserContextType {
   week1Name: string;
@@ -27,11 +28,11 @@ const UserContext = createContext<UserContextType>({
 });
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
-  const [week1Name, setWeek1Name] = useState("");
-  const [week2Name, setWeek2Name] = useState("");
-  const [week3Name, setWeek3Name] = useState("");
-  const [week4Name, setWeek4Name] = useState("");
-  const [week5Name, setWeek5Name] = useState("");
+  const [week1Name, setWeek1Name] = useLocalStorage("lz-week1-name", "");
+  const [week2Name, setWeek2Name] = useLocalStorage("lz-week2-name", "");
+  const [week3Name, setWeek3Name] = useLocalStorage("lz-week3-name", "");
+  const [week4Name, setWeek4Name] = useLocalStorage("lz-week4-name", "");
+  const [week5Name, setWeek5Name] = useLocalStorage("lz-week5-name", "");
   return (
     <UserContext.Provider value={{ week1Name, setWeek1Name, week2Name, setWeek2Name, week3Name, setWeek3Name, week4Name, setWeek4Name, week5Name, setWeek5Name }}>
       {children}

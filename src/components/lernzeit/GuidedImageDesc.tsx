@@ -1,5 +1,5 @@
-import { useState } from "react";
 import { Eye, ChevronDown } from "lucide-react";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 const QUESTIONS = [
   {
@@ -52,7 +52,7 @@ interface Props {
 }
 
 export const GuidedImageDesc = ({ imgSrc, imgAlt }: Props) => {
-  const [answers, setAnswers] = useState<Record<string, string>>({});
+  const [answers, setAnswers] = useLocalStorage<Record<string, string>>("w5-guided", {});
   const [modelOpen, setModelOpen] = useState(false);
 
   const allAnswered = QUESTIONS.every((q) => (answers[q.id] || "").trim().length > 0);
