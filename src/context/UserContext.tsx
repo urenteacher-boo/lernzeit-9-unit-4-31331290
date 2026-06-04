@@ -12,6 +12,8 @@ interface UserContextType {
   setWeek4Name: (name: string) => void;
   week5Name: string;
   setWeek5Name: (name: string) => void;
+  week6Name: string;
+  setWeek6Name: (name: string) => void;
 }
 
 const UserContext = createContext<UserContextType>({
@@ -25,6 +27,8 @@ const UserContext = createContext<UserContextType>({
   setWeek4Name: () => {},
   week5Name: "",
   setWeek5Name: () => {},
+  week6Name: "",
+  setWeek6Name: () => {},
 });
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
@@ -33,8 +37,9 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [week3Name, setWeek3Name] = useLocalStorage("lz-week3-name", "");
   const [week4Name, setWeek4Name] = useLocalStorage("lz-week4-name", "");
   const [week5Name, setWeek5Name] = useLocalStorage("lz-week5-name", "");
+  const [week6Name, setWeek6Name] = useLocalStorage("lz-week6-name", "");
   return (
-    <UserContext.Provider value={{ week1Name, setWeek1Name, week2Name, setWeek2Name, week3Name, setWeek3Name, week4Name, setWeek4Name, week5Name, setWeek5Name }}>
+    <UserContext.Provider value={{ week1Name, setWeek1Name, week2Name, setWeek2Name, week3Name, setWeek3Name, week4Name, setWeek4Name, week5Name, setWeek5Name, week6Name, setWeek6Name }}>
       {children}
     </UserContext.Provider>
   );

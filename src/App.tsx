@@ -11,6 +11,7 @@ import Week2Listening from "./pages/Week2Listening.tsx";
 import Week3Grammar from "./pages/Week3Grammar.tsx";
 import Week4Writing from "./pages/Week4Writing.tsx";
 import Week5Speaking from "./pages/Week5Speaking.tsx";
+import Week6Revision from "./pages/Week6Revision.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -30,6 +31,7 @@ const App = () => (
             <Route path="/week/3" element={<Week3Grammar />} />
             <Route path="/week/4" element={<Week4Writing />} />
             <Route path="/week/5" element={<Week5Speaking />} />
+            <Route path="/week/6" element={<Week6Revision />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
